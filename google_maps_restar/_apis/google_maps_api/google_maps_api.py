@@ -1,7 +1,8 @@
 import requests
+from google_maps_api.config import gm_place_api_url
 
 def __call_api(endpoint: str):
-    response = requests.get(f'https://maps.googleapis.com/maps/api/place{endpoint}')
+    response = requests.get(gm_place_api_url + endpoint)
     print(f'Response status code: {response.status_code}')
     return response.json()
 
