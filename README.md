@@ -62,13 +62,22 @@ The dataframe contains the 3 columns of the bangia_reviews.csv dataframe, plus 6
 -----------------------------------------
 To reassign ratings out of 5 stars to restaurant reviews, we first need to determine how to rate the written reviews. We will use a RoBERTa model (https://arxiv.org/abs/1907.11692), a modification of the Bidirectional Encoder Representations from Transformers (BERT) model proposed by Google in 2018 (https://arxiv.org/abs/1810.04805).
 
-RoBERTa is able to perform sentiment analysis, in which it takes in text and assigns the text a score for positive sentiment, negative sentiment, and neutral sentiment. These three scores sum to 1.
+RoBERTa is able to perform sentiment analysis, in which it takes in text and assigns the text a score for positive sentiment, negative sentiment, and neutral sentiment. We will call them `roberta_pos`, `roberta_neg`, and `roberta_neu` respectively. These three scores sum to 1 (`roberta_pos`+`roberta_neg`+`roberta_neu`=1).
 
 ### Starting with Huggingface
 To understand how RoBERTa sentiment analysis works, we begin with the initial analysis from a Huggingface tutorial Kaggle notebook (https://www.kaggle.com/code/robikscube/sentiment-analysis-python-youtube-tutorial/notebook).
 
+Using 500 Amazon reviews from the Reviews.csv file, we view the distribution of `Score` (1 to 5 stars):
+<img src="images/visualize_documents-2-1-A.png" alt="Reviews.csv Score distribution" width="800"/>
+
+RoBERTa sentiment analysis assigns `roberta_pos`, `roberta_neg`, and `roberta_neu` scores to each of the reviews. The left, middle, and right plots below show the average `roberta_pos`, `roberta_neu`, and `roberta_neg` scores respectively for reviews of each star rating:
+<img src="images/visualize_documents-2-1-B.png" alt="RoBERTa Scores by Star Rating" width="800"/>
+
 ### Original Analysis of RoBERTa
-Text
+We would like to figure out how to re-assign star ratings out of 5 to the reviews based on these RoBERTa scores. An obvious first idea might be to assign star ratings linearly from 1 to 5 based one the value of `roberta_pos`-`roberta_neg`. We will demonstrate why this first idea is problematica better solution, and then we will present a better solution.
+
+Because the RoBERTa scores for a sample of text always follow `roberta_pos`+`roberta_neg`+`roberta_neu`=1, all RoBERTa scores exist in this same plane in 3D space:
+<img src="images/visualize_documents-2-1-C.png" alt="RoBERTa Scores by Star Rating" width="800"/>
 
 ## Using RoBERTa Sentiment Analysis on Google Maps Customer Reviews to Re-assign Star Ratings (out of 5) to Restaurants
 -----------------------------------------------------------------------------------------------------------------------
