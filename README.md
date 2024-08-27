@@ -79,6 +79,8 @@ We would like to figure out how to re-assign star ratings out of 5 to the review
 Because the RoBERTa scores for a sample of text always follow `roberta_pos`+`roberta_neg`+`roberta_neu`=1, all RoBERTa scores exist in this same plane in 3D space:
 <img src="images/visualize_documents-2-1-C.png" alt="RoBERTa Scores by Star Rating" width="800"/>
 
+Takeing the `roberta_pos`, `roberta_neg`, and `roberta_neu` directions as <1,0,0>, <0,1,0>, and <0,0,1> respectively, our reviews all exist in the plane parallel to the <1,1,1> vector.
+
 ## Using RoBERTa Sentiment Analysis on Google Maps Customer Reviews to Re-assign Star Ratings (out of 5) to Restaurants
 -----------------------------------------------------------------------------------------------------------------------
 Some stuff here
