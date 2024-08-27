@@ -77,9 +77,34 @@ RoBERTa sentiment analysis assigns `roberta_pos`, `roberta_neg`, and `roberta_ne
 We would like to figure out how to re-assign star ratings out of 5 to the reviews based on these RoBERTa scores. An obvious first idea might be to assign star ratings linearly from 1 to 5 based one the value of `roberta_pos`-`roberta_neg`. We will demonstrate why this first idea is problematica better solution, and then we will present a better solution.
 
 Because the RoBERTa scores for a sample of text always follow `roberta_pos`+`roberta_neg`+`roberta_neu`=1, all RoBERTa scores exist in this same plane in 3D space:
-<img src="images/visualize_documents-2-1-C.png" alt="RoBERTa Scores by Star Rating" width="800"/>
+<img src="images/visualize_documents-2-2-A.png" alt="RoBERTa Scores 3D Scatter" width="800"/>
 
-Takeing the `roberta_pos`, `roberta_neg`, and `roberta_neu` directions as <1,0,0>, <0,1,0>, and <0,0,1> respectively, our reviews all exist in the plane parallel to the <1,1,1> vector.
+Takeing the `roberta_pos`, `roberta_neg`, and `roberta_neu` directions as [1 0 0], [0 1 0], and [0 0 1] respectively, our reviews all exist in the plane orthogonal to the vector [1 1 1]. Now we can find the orthogonal basis vectors in the plane.
+
+A good choice for the horizontal basis vector would be [1 -1 0] or [-1 1 0], which would make `roberta_pos`-`roberta_neg` or `roberta_neg`-`roberta_pos`. Since it makes sense for `roberta_pos`-`roberta_neg` to be positive for reviews with more positive sentiment, we choose [1 -1 0] as our basis vector. This makes `roberta_pos`-`roberta_neg` the horizontal axis value. We make this a new variable `pos_neg` and add it to our dataframe.
+
+We find the vertical basis vector by taking the cross product of [1 1 1] and [1 -1 0]. This gives us [1 1 -2], making `roberta_pos`+`roberta_neg`+2*`roberta_neu`. We make this a new variable `pos_neg_2neu` and add it to our dataframe.
+
+We plot our reviews in this 2D space of `pos_neg` vs. `pos_neg_2neu`
+<img src="images/visualize_documents-2-2-B.png" alt="RoBERTa Scores in Plane" width="800"/>
+
+It is clear now the problem with scoring the reviews linearly by `roberta_pos`-`roberta_neg` value would push this data toward extreme ends of the distribution because of the sharp slopes near the ends. Let us instead try to scale the scores by distance along the distribution shape.
+
+We see the data falls in a range of hyperbolic shapes (note that intersecting lines of reciprocal slopes form a collapsed hyperbola). The prcedure is as follows:
+- We find a best fit hyperbola to the data.
+- For each data point we find the closest point on the best fit line.
+- Calculate the fraction of the total best fit curve length this closest point lies at, multiply by 4, and add 1. This gives a rating between 1 and 5 because Google Maps's lowest rating is 1 star.
+- Round this star rating to the nearest 0.1 stars.
+The results of this procedure are shown below:
+<img src="images/visualize_documents-2-2-C.png" alt="Re-Star Amazon Reviews" width="800"/>
+
+Note that since the star scores are rounded to the nearest 0.1 stars, some data points of one color will be closer to the line of another color:
+<img src="images/visualize_documents-2-2-D.png" alt="Re-Star vs. Original Stars" width="800"/>
+
+This is fine.
+
+We plot the average Re-Star score vs. the original star score:
+<img src="images/visualize_documents-2-2-E.png" alt="Re-Star vs. Original Stars" width="800"/>
 
 ## Using RoBERTa Sentiment Analysis on Google Maps Customer Reviews to Re-assign Star Ratings (out of 5) to Restaurants
 -----------------------------------------------------------------------------------------------------------------------
