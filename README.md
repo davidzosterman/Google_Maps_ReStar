@@ -9,7 +9,12 @@ Employing Natural Language Processing (NLP) to re-rate restaurants using Google 
     - [Reviews.csv](#reviews.csv)
     - [bangia_reviews.csv](#bangia_reviews.csv)
     - [bangia_reviews_processed.csv](#bangia_reviews_processed.csv)
+- [Understanding RoBERTa Sentiment Analysis](#understanding-roberta-sentiment-analysis)
+    - [Starting with Huggingface](#starting-with-huggingface)
+    - [Original Analysis of RoBERTa](original-analysis-of-roberta)
 - [Using RoBERTa Sentiment Analysis on Google Maps Customer Reviews to Re-assign Star Ratings out of 5 to Restaurants](using-roberta-sentiment-analysis-on-google-maps-customer-reviews-to-re-assign-star-ratings-out-of-5-to-restaurants)
+    - a
+    -  
 
 ## Data Description
 -------------------
@@ -52,6 +57,18 @@ The dataframe contains the 3 columns of the bangia_reviews.csv dataframe, plus 6
 - `new_stars`: New 1 to 5 star rating of the restaurant from this review. Increments of 0.1 stars. Minimum of 1.0 stars. Int.
 - `pos_neg`: First orthogonal basis vector in the `roberta_pos`+`roberta_neg`+`roberta_neu`=1 plane.`pos_neg`=`roberta_pos`-`roberta_neg`. Float.
 - `pos_neg_2neu`: Second orthogonal basis vector in the `roberta_pos`+`roberta_neg`+`roberta_neu`=1 plane. `pos_neg_2neu`=`roberta_pos`+`roberta_neg`-2*`roberta_neu`. Float.
+
+## Understanding RoBERTa Sentiment Analysis
+-----------------------------------------
+To reassign ratings out of 5 stars to restaurant reviews, we first need to determine how to rate the written reviews. We will use a RoBERTa model (https://arxiv.org/abs/1907.11692), a modification of the Bidirectional Encoder Representations from Transformers (BERT) model proposed by Google in 2018 (https://arxiv.org/abs/1810.04805).
+
+RoBERTa is able to perform sentiment analysis, in which it takes in text and assigns the text a score for positive sentiment, negative sentiment, and neutral sentiment. These three scores sum to 1.
+
+### Starting with Huggingface
+To understand how RoBERTa sentiment analysis works, we begin with the initial analysis from a Huggingface tutorial Kaggle notebook (https://www.kaggle.com/code/robikscube/sentiment-analysis-python-youtube-tutorial/notebook).
+
+### Original Analysis of RoBERTa
+Text
 
 ## Using RoBERTa Sentiment Analysis on Google Maps Customer Reviews to Re-assign Star Ratings (out of 5) to Restaurants
 -----------------------------------------------------------------------------------------------------------------------
