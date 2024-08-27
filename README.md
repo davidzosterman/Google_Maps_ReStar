@@ -85,7 +85,7 @@ A good choice for the horizontal basis vector would be [1 -1 0] or [-1 1 0], whi
 
 We find the vertical basis vector by taking the cross product of [1 1 1] and [1 -1 0]. This gives us [1 1 -2], making `roberta_pos`+`roberta_neg`+2*`roberta_neu`. We make this a new variable `pos_neg_2neu` and add it to our dataframe.
 
-We plot our reviews in this 2D space of `pos_neg` vs. `pos_neg_2neu`
+We plot our reviews in this 2D space of `pos_neg` vs. `pos_neg_2neu`:
 <img src="images/visualize_documents-2-2-B.png" alt="RoBERTa Scores in Plane" width="800"/>
 
 It is clear now the problem with scoring the reviews linearly by `roberta_pos`-`roberta_neg` value would push this data toward extreme ends of the distribution because of the sharp slopes near the ends. Let us instead try to scale the scores by distance along the distribution shape.
@@ -108,4 +108,25 @@ We plot the average Re-Star score vs. the original star score:
 
 ## Using RoBERTa Sentiment Analysis on Google Maps Customer Reviews to Re-assign Star Ratings (out of 5) to Restaurants
 -----------------------------------------------------------------------------------------------------------------------
-Some stuff here
+We use the same analysis on the bangia_reviews.csv dataframe, scraped from the Google Maps reviews for the NYC restaurant, Bangia.
+
+Using 344 reviews from the bangia_reviews.csv file, we view the distribution of `Score` (1 to 5 stars):
+<img src="images/visualize_documents-3-A.png" alt="bangia_reviews.csv Score distribution" width="800"/>
+
+We plot the RoBERTa sentiment analysis scores for reviews of each star rating:
+<img src="images/visualize_documents-3-B.png" alt="RoBERTa Scores by Star Rating" width="800"/>
+
+We plot our reviews in the `pos_neg` vs. `pos_neg_2neu` plane:
+<img src="images/visualize_documents-3-C.png" alt="RoBERTa Scores in Plane" width="800"/>
+
+It is clear now the problem with scoring the reviews linearly by `roberta_pos`-`roberta_neg` value would push this data toward extreme ends of the distribution because of the sharp slopes near the ends. Let us instead try to scale the scores by distance along the distribution shape.
+
+Again, we fit the data to a hyperbola, find the nearest point on the curve for each data point, and assign a new star value from 1.0 to 5.0 accordingly:
+<img src="images/visualize_documents-3-D.png" alt="Re-Star Amazon Reviews" width="800"/>
+
+We plot the average Re-Star score vs. the original star score:
+<img src="images/visualize_documents-3-E.png" alt="Re-Star vs. Original Stars" width="800"/>
+
+The old rating calculated from available reviews was 4.346 stars.
+The old rating from just reviews with comments was 4.189 stars.
+The new RoBERTa rating is 4.194 stars!
