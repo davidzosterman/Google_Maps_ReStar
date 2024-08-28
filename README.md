@@ -3,6 +3,8 @@
 
 Employing Natural Language Processing (NLP) to re-rate restaurants using Google Maps written reviews.
 
+<img src="images/visualize_documents-header.png" alt="Nice Header Plot" width="300"/>
+
 ## Table of Contents
 --------------------
 - [Data Description](#data-description)
