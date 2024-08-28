@@ -13,8 +13,6 @@ Employing Natural Language Processing (NLP) to re-rate restaurants using Google 
     - [Starting with Huggingface](#starting-with-huggingface)
     - [Original Analysis of RoBERTa](original-analysis-of-roberta)
 - [Using RoBERTa Sentiment Analysis on Google Maps Customer Reviews to Re-assign Star Ratings out of 5 to Restaurants](using-roberta-sentiment-analysis-on-google-maps-customer-reviews-to-re-assign-star-ratings-out-of-5-to-restaurants)
-    - a
-    -  
 
 ## Data Description
 -------------------
