@@ -66,16 +66,19 @@ RoBERTa is able to perform sentiment analysis, in which it takes in text and ass
 To understand how RoBERTa sentiment analysis works, we begin with the initial analysis from a Huggingface tutorial Kaggle notebook (https://www.kaggle.com/code/robikscube/sentiment-analysis-python-youtube-tutorial/notebook).
 
 Using 500 Amazon reviews from the Reviews.csv file, we view the distribution of `Score` (1 to 5 stars):
-<img src="images/visualize_documents-2-1-A.png" alt="Reviews.csv Score distribution" width="800"/>
+
+<img src="images/visualize_documents-2-1-A.png" alt="Reviews.csv Score distribution" width="600"/>
 
 RoBERTa sentiment analysis assigns `roberta_pos`, `roberta_neg`, and `roberta_neu` scores to each of the reviews. The left, middle, and right plots below show the average `roberta_pos`, `roberta_neu`, and `roberta_neg` scores respectively for reviews of each star rating:
+
 <img src="images/visualize_documents-2-1-B.png" alt="RoBERTa Scores by Star Rating" width="800"/>
 
 ### Original Analysis of RoBERTa
 We would like to figure out how to re-assign star ratings out of 5 to the reviews based on these RoBERTa scores. An obvious first idea might be to assign star ratings linearly from 1 to 5 based one the value of `roberta_pos`-`roberta_neg`. We will demonstrate why this first idea is problematica better solution, and then we will present a better solution.
 
 Because the RoBERTa scores for a sample of text always follow `roberta_pos`+`roberta_neg`+`roberta_neu`=1, all RoBERTa scores exist in this same plane in 3D space:
-<img src="images/visualize_documents-2-2-A.png" alt="RoBERTa Scores 3D Scatter" width="800"/>
+
+<img src="images/visualize_documents-2-2-A.png" alt="RoBERTa Scores 3D Scatter" width="400"/>
 
 Takeing the `roberta_pos`, `roberta_neg`, and `roberta_neu` directions as [1 0 0], [0 1 0], and [0 0 1] respectively, our reviews all exist in the plane orthogonal to the vector [1 1 1]. Now we can find the orthogonal basis vectors in the plane.
 
@@ -84,7 +87,8 @@ A good choice for the horizontal basis vector would be [1 -1 0] or [-1 1 0], whi
 We find the vertical basis vector by taking the cross product of [1 1 1] and [1 -1 0]. This gives us [1 1 -2], making `roberta_pos`+`roberta_neg`+2*`roberta_neu`. We make this a new variable `pos_neg_2neu` and add it to our dataframe.
 
 We plot our reviews in this 2D space of `pos_neg` vs. `pos_neg_2neu`:
-<img src="images/visualize_documents-2-2-B.png" alt="RoBERTa Scores in Plane" width="800"/>
+
+<img src="images/visualize_documents-2-2-B.png" alt="RoBERTa Scores in Plane" width="600"/>
 
 It is clear now the problem with scoring the reviews linearly by `roberta_pos`-`roberta_neg` value would push this data toward extreme ends of the distribution because of the sharp slopes near the ends. Let us instead try to scale the scores by distance along the distribution shape.
 
