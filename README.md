@@ -98,37 +98,47 @@ We see the data falls in a range of hyperbolic shapes (note that intersecting li
 - Calculate the fraction of the total best fit curve length this closest point lies at, multiply by 4, and add 1. This gives a rating between 1 and 5 because Google Maps's lowest rating is 1 star.
 - Round this star rating to the nearest 0.1 stars.
 The results of this procedure are shown below:
-<img src="images/visualize_documents-2-2-C.png" alt="Re-Star Amazon Reviews" width="800"/>
 
-Note that since the star scores are rounded to the nearest 0.1 stars, some data points of one color will be closer to the line of another color:
-<img src="images/visualize_documents-2-2-D.png" alt="Re-Star vs. Original Stars" width="800"/>
+<img src="images/visualize_documents-2-2-C.png" alt="Re-Star Amazon Reviews" width="400"/>
+
+Note that the values `pos_neg` vs. `pos_neg_2neu` did not need to be normalized to have a range of 1 because the star rating comes from the *fraction* of the distance along the fit curve. Rescaling by normalizing the basis values does not change fractions of lengths.
+
+Also note that since the star scores are rounded to the nearest 0.1 stars, some data points of one color will be closer to the line of another color:
+
+<img src="images/visualize_documents-2-2-D.png" alt="Re-Star vs. Original Stars" width="400"/>
 
 This is fine.
 
 We plot the average Re-Star score vs. the original star score:
-<img src="images/visualize_documents-2-2-E.png" alt="Re-Star vs. Original Stars" width="800"/>
+
+<img src="images/visualize_documents-2-2-E.png" alt="Re-Star vs. Original Stars" width="600"/>
 
 ## Using RoBERTa Sentiment Analysis on Google Maps Customer Reviews to Re-assign Star Ratings (out of 5) to Restaurants
 -----------------------------------------------------------------------------------------------------------------------
 We use the same analysis on the bangia_reviews.csv dataframe, scraped from the Google Maps reviews for the NYC restaurant, Bangia.
 
 Using 344 reviews from the bangia_reviews.csv file, we view the distribution of `Score` (1 to 5 stars):
+
 <img src="images/visualize_documents-3-A.png" alt="bangia_reviews.csv Score distribution" width="800"/>
 
 We plot the RoBERTa sentiment analysis scores for reviews of each star rating:
+
 <img src="images/visualize_documents-3-B.png" alt="RoBERTa Scores by Star Rating" width="800"/>
 
 We plot our reviews in the `pos_neg` vs. `pos_neg_2neu` plane:
+
 <img src="images/visualize_documents-3-C.png" alt="RoBERTa Scores in Plane" width="800"/>
 
 It is clear now the problem with scoring the reviews linearly by `roberta_pos`-`roberta_neg` value would push this data toward extreme ends of the distribution because of the sharp slopes near the ends. Let us instead try to scale the scores by distance along the distribution shape.
 
 Again, we fit the data to a hyperbola, find the nearest point on the curve for each data point, and assign a new star value from 1.0 to 5.0 accordingly:
+
 <img src="images/visualize_documents-3-D.png" alt="Re-Star Amazon Reviews" width="800"/>
 
 We plot the average Re-Star score vs. the original star score:
+
 <img src="images/visualize_documents-3-E.png" alt="Re-Star vs. Original Stars" width="800"/>
 
 The old rating calculated from available reviews was 4.346 stars.
 The old rating from just reviews with comments was 4.189 stars.
-The new RoBERTa rating is 4.194 stars!
+**The new RoBERTa rating is 4.194 stars!**
