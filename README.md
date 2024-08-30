@@ -135,7 +135,7 @@ It is clear now the problem with scoring the reviews linearly by `roberta_pos`-`
 
 Again, we fit the data to a hyperbola, find the nearest point on the curve for each data point, and assign a new star value from 1.0 to 5.0 accordingly:
 
-<img src="images/visualize_documents-3-D.png" alt="Re-Star Amazon Reviews" width="600"/>
+<img src="images/visualize_documents-3-D.png" alt="Re-Star Bangia Reviews" width="600"/>
 
 We plot the average Re-Star score vs. the original star score:
 
