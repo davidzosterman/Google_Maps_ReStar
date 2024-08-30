@@ -82,7 +82,7 @@ Because the RoBERTa scores for a sample of text always follow `roberta_pos`+`rob
 
 <img src="images/visualize_documents-2-2-A.png" alt="RoBERTa Scores 3D Scatter" width="400"/>
 
-Takeing the `roberta_pos`, `roberta_neg`, and `roberta_neu` directions as [1 0 0], [0 1 0], and [0 0 1] respectively, our reviews all exist in the plane orthogonal to the vector [1 1 1]. Now we can find the orthogonal basis vectors in the plane.
+Taking the `roberta_pos`, `roberta_neg`, and `roberta_neu` directions as [1 0 0], [0 1 0], and [0 0 1] respectively, our reviews all exist in the plane orthogonal to the vector [1 1 1]. Now we can find the orthogonal basis vectors in the plane.
 
 A good choice for the horizontal basis vector would be [1 -1 0] or [-1 1 0], which would make `roberta_pos`-`roberta_neg` or `roberta_neg`-`roberta_pos`. Since it makes sense for `roberta_pos`-`roberta_neg` to be positive for reviews with more positive sentiment, we choose [1 -1 0] as our basis vector. This makes `roberta_pos`-`roberta_neg` the horizontal axis value. We make this a new variable `pos_neg` and add it to our dataframe.
 
