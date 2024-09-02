@@ -29,11 +29,11 @@ It contains 10 columns, but the only columns we will use are:
 
 The Reviews.csv file too large (300 MB) to put on GitHub (limit 25 MB), so this repository has a Reviews_about.md markdown file in its place.
 
-The dataframe Reviews.csv file can be downloaded here:
-https://www.kaggle.com/code/robikscube/sentiment-analysis-python-youtube-tutorial/input
+The dataframe Reviews.csv file can be downloaded [here](https://www.kaggle.com/code/robikscube/sentiment-analysis-python-youtube-tutorial/input).
 
 ### bangia_reviews.csv
 This dataframe contains 645 customer reviews for the NYC restaurant Bangia, scraped from Google Maps using the Google Maps `Places API`. \
+The API wrapper can be found [here](https://github.com/davidzosterman/Google_Maps_ReStar/blob/main/google_maps_restar/google_maps_restar/_apis/google_maps_api/google_maps_api.py) in `google_maps_restar/google_maps_restar/_apis/google_maps_api/google_maps_api.py`.\
 Note: It turned out the `Places API` only returns a maximum of five reviews (there is no way around this), so the actual bangia_reviews.csv file was made using a rapid copy-paste technique.
 
 Scraping using the API is demonstrated by the 02 - data_scraping.ipynb notebook.
@@ -65,7 +65,7 @@ To reassign ratings out of 5 stars to restaurant reviews, we first need to deter
 RoBERTa is able to perform sentiment analysis, in which it takes in text and assigns the text a score for positive sentiment, negative sentiment, and neutral sentiment. We will call them `roberta_pos`, `roberta_neg`, and `roberta_neu` respectively. These three scores sum to 1 (`roberta_pos`+`roberta_neg`+`roberta_neu`=1).
 
 ### Starting with Huggingface
-To understand how RoBERTa sentiment analysis works, we begin with the initial analysis from a Huggingface tutorial Kaggle notebook (https://www.kaggle.com/code/robikscube/sentiment-analysis-python-youtube-tutorial/notebook).
+To understand how RoBERTa sentiment analysis works, we begin with the initial analysis from a [Huggingface tutorial Kaggle notebook](https://www.kaggle.com/code/robikscube/sentiment-analysis-python-youtube-tutorial/notebook).
 
 Using 500 Amazon reviews from the Reviews.csv file, we view the distribution of `Score` (1 to 5 stars):
 
